@@ -25,49 +25,49 @@ Si pudiste acceder al cliente web y al administrador significa que la aplicació
 Al iniciar, se accede al sitio primcipal.[http://localhost:8100/](http://localhost:8100/)
 ## Home [http://localhost:8100/home](http://localhost:8100/home) 
 ![home](doc/home.png)
-> La pagina inicial carga todos los dispositivos y su detalle es accesible mediante el botón asi llamado
+> La pagina inicial carga todos los dispositivos y su detalle es accesible mediante el botón asi llamado.
 
 ## Detalle  [http://localhost:8100/detalle/1](http://localhost:8100/detalle/1)
 ![detalle](doc/detalle.png)
->Permite ver el ultimo estado de un sensor , desde esta pantalla se pueden :
-- Volver
+>Permite ver el ultimo estado de un sensor , desde esta pantalla se puede :
+- Volver a la pagina anterior.
 - Cerrar o Abrir la electovalvula
 - Consultar el historico
 - Consultar el registro de activacion de la electrovalvula
 
 ## Abrir-Cerrar
  
- Emula la apertura o cierre, generando un valor aleatoreo el cual se guarda como medicion nueva
- Tambien se guarda la operacion (apertura o cierre) como parte de los registros de riego
- Siempre se considera abierta inicialmente
+ Emula la apertura o cierre, generando un valor aleatoreo el cual se guarda como medicion nueva cuando se efectua el cierre.
+ También se guarda la operacion (apertura o cierre) como parte de los registros de riego.
+ Siempre se busca el ultimo registro de la tabla de logs, y se asigna dicho estado. Si no existen registros se considera cerrada.
 
 ## Historico
 ![historico](doc/historico.png)
->Permite consultar las mediciones previas 
+>Permite consultar las mediciones previas.
 
 ## Registro Riego
 ![registro](doc/registro.png)
->Permite consultar la apertura cierre de la electrovalvula
+>Permite consultar la apertura cierre de la electrovalvula.
 
 >Todas las operaciones son efectuadas en el momento, no existe algun tipo de cache o carga de datos parcial.
 Tampoco existe limitacion para la apertura o cierre de la electrovalvula, por lo tanto se mostraran tantos registros como existan.
 
 ### Estructura de la DB
 
-Se respeta el archivo inicial de datos en  `db/dumps/smart_home.sql` para crear la base de datos automáticamente.
+Se respeta el archivo inicial de datos en `db/dumps/smart_home.sql` para crear la base de datos automáticamente.
 
 ### Frontend
 * Se ajusta el dockerfile para poder incorporar la api highcharts
 * Uso de directivas ngIf cuando no existen registros de cambios o mediciones.
-* Uso de directivas ngFor para al recuperar los datos en el home, en la pagina de mediciones y de registros
+* Uso de directivas ngFor para al recuperar los datos en el home, en la pagina de mediciones y de registros.
 * Se creo la directiva resaltar en src/frontend/dam/src/app/directive, cuya funcion es colorear de beige cuando el mouse se posiciona sobre el elemento que lo emplee, en este caso se uso para las tablas de mediciones y registros.
 * Los pipes custom se encuentran en src/frontend/dam/src/app/pipe.
 * Se definen 3 pipes, uno para formatear fecha , otro para pasar de KPa a CB , y para informar el estado (1 abierto, 0 cerrado).
 * El servicio se encuentra en /src/app/services , existen dos, pero uno es para acceder a los datos, el otro seria responsable de comunicarse con el dispostivo.
 * La api en express se encuentra en src/backend
-* Si la URL no es valida, se redirije al /home.
+* Si la URL no es valida, se redirige al /home.
 
 ### Backend
 * Se dividio en un archivo por acceso a datos (dispostivo, mediciones y log riego).
-* Se valida la informacion rrecibida para poder efectuar las consultas a base de datos.
+* Se valida la informacion recibida para poder efectuar las consultas a base de datos.
 * En caso de error se responde con un detalle minimo sobre el posible problema.
