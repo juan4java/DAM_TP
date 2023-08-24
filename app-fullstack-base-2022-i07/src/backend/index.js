@@ -7,7 +7,10 @@ const cors = require('cors');
 var express = require('express');
 var app = express();
 var pool = require('./mysql-connector');
+
 const routerDispositivo = require('./routes/dispositivo')
+const routerMedicion = require('./routes/medicion')
+const routerRegistro = require('./routes/registro')
 
 var corsOptions = {
     origin: '*',
@@ -15,16 +18,16 @@ var corsOptions = {
 }
 
 const myLogger = function(req, res, next) {
-    console.log('Logged')
+    console.log(new Date())
     next()
 }
 
-const authenticator = function(req, res, next) {
+//const authenticator = function(req, res, next) {
     // si el usuario tiene permiso
-    next()
+    //next()
     // si el usuario no tiene permiso
-    res.send('No tenes permiso para acceder al recurso').status(401)
-}
+    //res.send('No tenes permiso para acceder al recurso').status(401)
+//}
 
 app.use(myLogger)
 // to parse application/json
@@ -35,22 +38,11 @@ app.use(express.static('/home/node/app/static/'));
 app.use(cors(corsOptions));
 
 app.use('/dispositivo', routerDispositivo)
+app.use('/medicion', routerMedicion)
+app.use('/registro', routerRegistro)
+
 
 //=======[ Main module code ]==================================================
-
-app.get('/', function(req, res, next) {
-    res.send({'mensaje': 'Hola DAM'}).status(200);
-});
-
-app.get('/user/', function(req, res, next) {
-    pool.query('Select * from Usuarios', function(err, result, fields) {
-        if (err) {
-            res.send(err).status(400);
-            return;
-        }
-        res.send(result);
-    });
-});
 
 app.listen(PORT, function(req, res) {
     console.log("NodeJS API running correctly");

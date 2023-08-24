@@ -6,11 +6,12 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { DispositivoPageModule } from './dispositivo/dispositivo.module';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
+  declarations: [AppComponent ],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, DispositivoPageModule, HttpClientModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })

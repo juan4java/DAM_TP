@@ -12,8 +12,16 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'dispositivos',
-    loadChildren: () => import('./dispositivos/dispositivos.module').then( m => m.DispositivosPageModule)
+    path: 'dispositivo/:id',
+    loadChildren: () => import('./dispositivo/dispositivo.module').then( m => m.DispositivoPageModule)
+  },
+  {
+    path: 'medicion/historico/:dispositivo_id',
+    loadChildren: () => import('./historico/historico.module').then( m => m.HistoricoPageModule)
+  },
+  {
+    path: 'valvula/registro/:dispositivo_id',
+    loadChildren: () => import('./registro/registro.module').then( m => m.RegistroPageModule)
   }
 ];
 

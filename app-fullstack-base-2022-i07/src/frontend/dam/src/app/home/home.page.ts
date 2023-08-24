@@ -1,12 +1,42 @@
-import { Component } from '@angular/core';
-
+import { Dispositivo } from './../class/Dispositivo';
+import { DataService } from './../services/data.service';
+import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
 
-  constructor() {}
+  public title:string = "Home"
+  private dArray:Array<Dispositivo> = new Array
 
+  constructor(private _service:DataService) {
+  }
+
+  async ngOnInit() {
+
+    await this._service.getDispositivoList()
+      .then((dList) => {
+        console.log(dList)
+        for (let dispositivo of dList) {
+          var disp = new Dispositivo()
+          disp.dispositivoId = dispositivo.dispositivoId
+          disp.nombre = dispositivo.nombre
+          disp.ubicacion = dispositivo.ubicacion
+          disp.electrovalulaId = dispositivo.electrovalvulaId
+
+          this.dArray.push(disp)
+          console.log(dispositivo.nombre)
+        }
+        console.log(dList)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  public getArray(){
+    return this.dArray
+  }
 }

@@ -1,0 +1,35 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>{{title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{title}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card>
+    <ion-card-header color="primary">
+      <ion-card-title>{{dispositivo.nombre}} - Estado : {{estado | estadoPipe}}</ion-card-title>
+    </ion-card-header>
+    <div id="highcharts" style="width:100%; height:300px;"></div>
+    
+  </ion-card>
+  <ion-content class="ion-padding">
+    <div *ngIf="estado==0">
+      <ion-button color="warning" routerLink="/home" ><ion-icon name="arrow-back-outline"></ion-icon>Volver</ion-button>
+      <ion-button id="open-toast" color="primary" (click)="accionarValvula(1)" [disabled]="false"><ion-icon slot="start" name="lock-open"></ion-icon>Abrir</ion-button>
+      <ion-button color="tertiary" routerLink="/medicion/historico/{{dispositivo.dispositivoId}}" ><ion-icon slot="start" name="book"></ion-icon>Historico</ion-button>
+      <ion-button color="success" routerLink="/valvula/registro/{{dispositivo.electrovalulaId}}" ><ion-icon slot="start" name="list-outline"></ion-icon>Registro riego</ion-button>
+    </div>
+    <div *ngIf="estado==1">
+      <ion-button color="warning" routerLink="/home" ><ion-icon name="arrow-back-outline"></ion-icon>Volver</ion-button>
+      <ion-button id="open-toast" color="secondary" (click)="accionarValvula(0)" ><ion-icon slot="start" name="lock-closed"></ion-icon>Cerrar</ion-button>
+      <ion-button color="tertiary" routerLink="/medicion/historico/{{dispositivo.dispositivoId}}" ><ion-icon slot="start" name="book"></ion-icon>Historico</ion-button>
+      <ion-button color="success" routerLink="/valvula/registro/{{dispositivo.electrovalulaId}}" ><ion-icon slot="start" name="list-outline"></ion-icon>Registro riego</ion-button>   
+    </div>
+     </ion-content>
+</ion-content>
